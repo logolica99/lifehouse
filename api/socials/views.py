@@ -18,10 +18,10 @@ def apiOverview(request):
         'Following Posts': '/posts/following',
         'Post Detail': '/post/<str:id>',
         "Create Post": '/post/create',
-        "Like/Unlike Post":'/post/<str:id>/like',
-        'Comment on a post':'/post/<str:id>/comment',
-        'Like/Unlike comment':'/comment/<str:id>/like',
-        'Follow/Unfollow':'/follow/<str:usernmae>'
+        "Like/Unlike Post": '/post/<str:id>/like',
+        'Comment on a post': '/post/<str:id>/comment',
+        'Like/Unlike comment': '/comment/<str:id>/like',
+        'Follow/Unfollow': '/follow/<str:usernmae>'
 
 
 
@@ -47,11 +47,10 @@ def post_detail(request, id):
     except:
         data["likes"] = 0
 
-
-
     post_liked = True
     try:
-        Post_like_model.objects.get(user = User.objects.get(id=request.user.id),post=post_liked)
+        Post_like_model.objects.get(user=User.objects.get(
+            id=request.user.id), post=post_liked)
     except:
         post_liked = False
 
@@ -62,45 +61,46 @@ def post_detail(request, id):
     comments_data = []
     for comment in comments_json:
         try:
-            profile_pic = User.objects.get(id=comment["fields"]["user"]).profile_pic.url
+            profile_pic = User.objects.get(
+                id=comment["fields"]["user"]).profile_pic.url
         except:
-            profile_pic=""
-
+            profile_pic = ""
 
         comment_liked = True
         try:
-            Comment_like_model.objects.get(user = User.objects.get(id=request.user.id),comment=Post_comment_model.objects.get(id=comment["pk"]))
+            Comment_like_model.objects.get(user=User.objects.get(
+                id=request.user.id), comment=Post_comment_model.objects.get(id=comment["pk"]))
         except:
             comment_liked = False
 
-
         comments_data += [
             [
-                {"id": comment["pk"]}, 
-                {"username": User.objects.get(id=comment["fields"]["user"]).username},
-                {"profile_pic":profile_pic},
-                {"content":comment["fields"]["content"]}, 
-                {"created_at":comment["fields"]["created_at"]}, 
-                {"likes":Post_comment_model.objects.get(id=comment["pk"]).likes.all().count()},
-                {"liked":comment_liked},
+                {"id": comment["pk"]},
+                {"username": User.objects.get(
+                    id=comment["fields"]["user"]).username},
+                {"profile_pic": profile_pic},
+                {"content": comment["fields"]["content"]},
+                {"created_at": comment["fields"]["created_at"]},
+                {"likes": Post_comment_model.objects.get(
+                    id=comment["pk"]).likes.all().count()},
+                {"liked": comment_liked},
             ]
         ]
-        
+
     data["comments"] = comments_data
 
-    #print(comments_json)
+    # print(comments_json)
     return Response(data)
-
 
 
 @api_view(['GET'])
 @login_required
 def following_posts(request):
-    following_id=[]
+    following_id = []
     for follower in Follower_model.objects.all():
         if follower.following == User.objects.get(id=request.user.id):
             following_id.append(follower.user.id)
-    
+
     for i in following_id:
         posts = Post.objects.filter(user=User.objects.get(id=i))
         posts_id = [i.id for i in posts]
@@ -112,60 +112,61 @@ def following_posts(request):
 
             data["username"] = User.objects.get(id=data["user"]).username
             try:
-                data["profile_pic"] = User.objects.get(id=data["user"]).profile_pic.url
+                data["profile_pic"] = User.objects.get(
+                    id=data["user"]).profile_pic.url
             except:
                 data["profile_pic"] = ""
             try:
-                data["likes"] = Post_like_model.objects.filter(post=post).count()
+                data["likes"] = Post_like_model.objects.filter(
+                    post=post).count()
             except:
                 data["likes"] = 0
 
-
-
             post_liked = True
             try:
-                Post_like_model.objects.get(user = User.objects.get(id=request.user.id),post=post_liked)
+                Post_like_model.objects.get(user=User.objects.get(
+                    id=request.user.id), post=post_liked)
             except:
                 post_liked = False
 
             data["liked"] = post_liked
 
             comments = Post_comment_model.objects.filter(post=post)
-            comments_json = json.loads(django_serializer.serialize('json', comments))
+            comments_json = json.loads(
+                django_serializer.serialize('json', comments))
             comments_data = []
             for comment in comments_json:
                 try:
-                    profile_pic = User.objects.get(id=comment["fields"]["user"]).profile_pic.url
+                    profile_pic = User.objects.get(
+                        id=comment["fields"]["user"]).profile_pic.url
                 except:
-                    profile_pic=""
-
+                    profile_pic = ""
 
                 comment_liked = True
                 try:
-                    Comment_like_model.objects.get(user = User.objects.get(id=request.user.id),comment=Post_comment_model.objects.get(id=comment["pk"]))
+                    Comment_like_model.objects.get(user=User.objects.get(
+                        id=request.user.id), comment=Post_comment_model.objects.get(id=comment["pk"]))
                 except:
                     comment_liked = False
 
-
                 comments_data += [
                     [
-                        {"id": comment["pk"]}, 
-                        {"username": User.objects.get(id=comment["fields"]["user"]).username},
-                        {"profile_pic":profile_pic},
-                        {"content":comment["fields"]["content"]}, 
-                        {"created_at":comment["fields"]["created_at"]}, 
-                        {"likes":Post_comment_model.objects.get(id=comment["pk"]).likes.all().count()},
-                        {"liked":comment_liked},
+                        {"id": comment["pk"]},
+                        {"username": User.objects.get(
+                            id=comment["fields"]["user"]).username},
+                        {"profile_pic": profile_pic},
+                        {"content": comment["fields"]["content"]},
+                        {"created_at": comment["fields"]["created_at"]},
+                        {"likes": Post_comment_model.objects.get(
+                            id=comment["pk"]).likes.all().count()},
+                        {"liked": comment_liked},
                     ]
                 ]
-                
+
             data["comments"] = comments_data
             all_posts.append(data)
 
-
     return Response(all_posts)
-
-
 
 
 @api_view(['GET'])
@@ -217,65 +218,91 @@ def user_data(request, username):
 @login_required
 def create_post(request):
     data = request.data
-    post = Post(user=User.objects.get(id=request.user.id),content=data['content'])
+    post = Post(user=User.objects.get(
+        id=request.user.id), content=data['content'])
     post.save()
     return Response("Item added successfully")
 
 
 @api_view(['POST'])
 @login_required
-def like_post(request,id):
+def like_post(request, id):
     post = Post.objects.get(id=id)
     user = User.objects.get(id=request.user.id)
 
     if request.data["like"]:
         try:
-            Post_like_model.objects.get(post=post,user=user)
+            Post_like_model.objects.get(post=post, user=user)
             return Response("can't like twice")
-        except: 
-            like = Post_like_model(post=post,user=user)
+        except:
+            like = Post_like_model(post=post, user=user)
             like.save()
+            if post.user.username != user.username:
+                try:
+                    pro_pic = user.profile_pic.url
+                except:
+                    pro_pic = ''
+                notification = Notification_model(
+                    user=post.user, username=user.username, pro_pic=pro_pic, content="liked your post")
+                notification.save()
             return Response("Liked successfully")
     else:
-        unlike = Post_like_model.objects.get(post=post,user=user)
+        unlike = Post_like_model.objects.get(post=post, user=user)
         unlike.delete()
         return Response("Unliked successfully")
-    
+
 
 @api_view(['POST'])
 @login_required
-def create_comment(request,id):
-    user=User.objects.get(id=request.user.id)
+def create_comment(request, id):
+    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=id)
     content = request.data["content"]
-    comment = Post_comment_model(user=user,post=post,content=content)
+    comment = Post_comment_model(user=user, post=post, content=content)
     comment.save()
+    if post.user.username != user.username:
+        try:
+            pro_pic = user.profile_pic.url
+        except:
+            pro_pic = ''
+        notification = Notification_model(
+            user=post.user, username=user.username, pro_pic=pro_pic, content="commented on your post")
+        notification.save()
     return Response("commented successfully")
 
 
 @api_view(['POST'])
 @login_required
-def like_comment(request,id):
+def like_comment(request, id):
     comment = Post_comment_model(id=id)
     user = User.objects.get(id=request.user.id)
 
     if request.data["like"]:
         try:
-            Comment_like_model.objects.get(comment=comment,user=user)
+            Comment_like_model.objects.get(comment=comment, user=user)
             return Response("can't like twice")
-        except: 
-            like = Comment_like_model(comment=comment,user=user)
+        except:
+            like = Comment_like_model(comment=comment, user=user)
             like.save()
+
+            if commentuser.username != user.username:
+                try:
+                    pro_pic = user.profile_pic.url
+                except:
+                    pro_pic = ''
+                notification = Notification_model(
+                    user=comment.user, username=user.username, pro_pic=pro_pic, content="liked your comment")
+                notification.save()
             return Response("Liked successfully")
     else:
-        unlike = Comment_like_model.objects.get(comment=comment,user=user)
+        unlike = Comment_like_model.objects.get(comment=comment, user=user)
         unlike.delete()
         return Response("Unliked successfully")
 
 
 @api_view(['POST'])
 @login_required
-def follow_unfollow(request,username):
+def follow_unfollow(request, username):
     following = User.objects.get(id=request.user.id)
     user = User.objects.get(username=username)
 
@@ -287,9 +314,24 @@ def follow_unfollow(request,username):
 
             follow = Follower_model(following=following, user=user)
             follow.save()
+            try:
+                pro_pic = following.profile_pic.url
+            except:
+                pro_pic = ''
+            notification = Notification_model(
+                user=user, username=following.username, pro_pic=pro_pic, content="followed you")
+            notification.save()
             return Response("followed successfully")
     else:
         unfollow = Follower_model.objects.get(following=following, user=user)
         unfollow.delete()
         return Response("unfollowed successfully")
 
+
+@api_view(['GET'])
+@login_required
+def notifications(request):
+    user = User.objects.get(id=request.user.id)
+    notification = Notification_model.objects.filter(user=user)
+    serializer = notifications_serializer(notification, many=True)
+    return Response(serializer.data)

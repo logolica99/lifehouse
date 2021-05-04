@@ -44,4 +44,5 @@ class Notification_model(models.Model):
     pro_pic = models.TextField(blank=True)
     username = models.TextField(blank=False)
     content = models.TextField(blank=False)
+    read = models.BooleanField(default=False)
 

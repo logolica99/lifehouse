@@ -13,3 +13,10 @@ class post_detail_serializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
+
+class notifications_serializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Notification_model
+        fields = "__all__"

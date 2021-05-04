@@ -20,7 +20,7 @@ def apiOverview(request):
         "Create Post": '/post/create',
         "Like/Unlike Post":'/post/<str:id>/like',
         'Comment on a post':'/post/<str:id>/comment',
-        'Like a comment':'/comment/<str:id>/like',
+        'Like/Unlike comment':'/comment/<str:id>/like',
 
 
 
@@ -210,3 +210,67 @@ def user_data(request, username):
     data["already_following"] = already_following
 
     return Response(data)
+
+
+@api_view(['POST'])
+@login_required
+def create_post(request):
+    data = request.data
+    post = Post(user=User.objects.get(id=request.user.id),content=data['content'])
+    post.save()
+    return Response("Item added successfully")
+
+
+@api_view(['POST'])
+@login_required
+def like_post(request,id):
+    post = Post.objects.get(id=id)
+    user = User.objects.get(id=request.user.id)
+
+    if request.data["like"]:
+        try:
+            Post_like_model.objects.get(post=post,user=user)
+            return Response("can't like twice")
+        except: 
+            like = Post_like_model(post=post,user=user)
+            like.save()
+            return Response("Liked successfully")
+    else:
+        unlike = Post_like_model.objects.get(post=post,user=user)
+        unlike.delete()
+        return Response("Unliked successfully")
+    
+
+@api_view(['POST'])
+@login_required
+def create_comment(request,id):
+    user=User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=id)
+    content = request.data["content"]
+    comment = Post_comment_model(user=user,post=post,content=content)
+    comment.save()
+    return Response("commented successfully")
+
+
+@api_view(['POST'])
+@login_required
+def like_comment(request,id):
+    comment = Post_comment_model(id=id)
+    user = User.objects.get(id=request.user.id)
+
+    if request.data["like"]:
+        try:
+            Comment_like_model.objects.get(comment=comment,user=user)
+            return Response("can't like twice")
+        except: 
+            like = Comment_like_model(comment=comment,user=user)
+            like.save()
+            return Response("Liked successfully")
+    else:
+        unlike = Comment_like_model.objects.get(comment=comment,user=user)
+        unlike.delete()
+        return Response("Unliked successfully")
+
+
+
+

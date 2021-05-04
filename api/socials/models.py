@@ -37,3 +37,4 @@ class Comment_like_model(models.Model):
 class Follower_model(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     following = models.ForeignKey(User,on_delete=models.CASCADE,related_name="following") 
+

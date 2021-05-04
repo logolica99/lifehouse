@@ -21,6 +21,7 @@ def apiOverview(request):
         "Like/Unlike Post":'/post/<str:id>/like',
         'Comment on a post':'/post/<str:id>/comment',
         'Like/Unlike comment':'/comment/<str:id>/like',
+        'Follow/Unfollow':'/follow/<str:usernmae>'
 
 
 
@@ -272,5 +273,23 @@ def like_comment(request,id):
         return Response("Unliked successfully")
 
 
+@api_view(['POST'])
+@login_required
+def follow_unfollow(request,username):
+    following = User.objects.get(id=request.user.id)
+    user = User.objects.get(username=username)
 
+    if request.data["follow"]:
+        try:
+            Follower_model.objects.get(following=following, user=user)
+            return Response("Already following")
+        except:
+
+            follow = Follower_model(following=following, user=user)
+            follow.save()
+            return Response("followed successfully")
+    else:
+        unfollow = Follower_model.objects.get(following=following, user=user)
+        unfollow.delete()
+        return Response("unfollowed successfully")
 

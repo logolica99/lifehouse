@@ -38,3 +38,10 @@ class Follower_model(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     following = models.ForeignKey(User,on_delete=models.CASCADE,related_name="following") 
 
+class Notification_model(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="notifications")
+    pro_pic = models.TextField(blank=True)
+    username = models.TextField(blank=False)
+    content = models.TextField(blank=False)
+

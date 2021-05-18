@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Nav from './components/Nav';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const [posts, setPosts] = useState([]);
+
+    const fetchPosts = async () => {
+        const data = await fetch('http://127.0.0.1:8000/api/following_posts');
+      
+        console.log(data.status);
+         // const posts = await data.json();
+    };
+
+    return (
+        <Router>  
+            <div className='App'>
+                <Nav />
+            </div>
+        </Router>
+    );
 }
 
 export default App;

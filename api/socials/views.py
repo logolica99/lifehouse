@@ -1,7 +1,9 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.core import serializers as django_serializer
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 import json
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -15,9 +17,9 @@ def apiOverview(request):
     api_urls = {
 
         'User Data': '/user/<str:username>',
-        'Following Posts': '/posts/following',
+        'Following Posts': '/following_posts',
         'Post Detail': '/post/<str:id>',
-        "Create Post": '/post/create',
+        "Create Post": '/posts/create',
         "Like/Unlike Post": '/post/<str:id>/like',
         'Comment on a post': '/post/<str:id>/comment',
         'Like/Unlike comment': '/comment/<str:id>/like',
@@ -335,3 +337,57 @@ def notifications(request):
     notification = Notification_model.objects.filter(user=user)
     serializer = notifications_serializer(notification, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def login_view(request):
+    
+    if request.method == "POST":
+        
+        username = request.data["username"]
+        password = request.data["password"]
+   
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return Response(
+                "Logged in Successfully"
+            )
+
+        else:
+            return Response(
+                "Invalid username and/or password."
+            )
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("api-overview"))
+
+@api_view(['POST'])
+def register(request):
+    if request.method == "POST":
+        username = request.data["username"]
+        email = request.data["email"]
+
+        # Ensure password matches confirmation
+        password = request.data["password"]
+        confirmation = request.data["confirmation"]
+        if password != confirmation:
+            return Response(
+                "Passwords must match."
+            )
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+            return Response("account created successfully")
+        except IntegrityError:
+            return Response(
+                "Username already taken."
+            )
+        login(request, user)
+        
+

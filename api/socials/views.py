@@ -33,7 +33,7 @@ def apiOverview(request):
 
 
 @api_view(['GET'])
-@login_required
+
 def post_detail(request, id):
     post = Post.objects.get(id=id)
     serializer = post_detail_serializer(post, many=False)
@@ -96,11 +96,11 @@ def post_detail(request, id):
 
 
 @api_view(['GET'])
-@login_required
-def following_posts(request):
+
+def following_posts(request,username):
     following_id = []
     for follower in Follower_model.objects.all():
-        if follower.following == User.objects.get(id=request.user.id):
+        if follower.following == User.objects.get(username=username):
             following_id.append(follower.user.id)
 
     for i in following_id:
@@ -127,7 +127,7 @@ def following_posts(request):
             post_liked = True
             try:
                 Post_like_model.objects.get(user=User.objects.get(
-                    id=request.user.id), post=post_liked)
+                    username=username), post=post_liked)
             except:
                 post_liked = False
 
@@ -147,7 +147,7 @@ def following_posts(request):
                 comment_liked = True
                 try:
                     Comment_like_model.objects.get(user=User.objects.get(
-                        id=request.user.id), comment=Post_comment_model.objects.get(id=comment["pk"]))
+                        username=username), comment=Post_comment_model.objects.get(id=comment["pk"]))
                 except:
                     comment_liked = False
 
@@ -172,7 +172,7 @@ def following_posts(request):
 
 
 @api_view(['GET'])
-@login_required
+
 def user_data(request, username):
 
     user = User.objects.get(username=username)
@@ -217,7 +217,7 @@ def user_data(request, username):
 
 
 @api_view(['POST'])
-@login_required
+
 def create_post(request):
     data = request.data
     post = Post(user=User.objects.get(
@@ -227,7 +227,7 @@ def create_post(request):
 
 
 @api_view(['POST'])
-@login_required
+
 def like_post(request, id):
     post = Post.objects.get(id=id)
     user = User.objects.get(id=request.user.id)
@@ -255,7 +255,7 @@ def like_post(request, id):
 
 
 @api_view(['POST'])
-@login_required
+
 def create_comment(request, id):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=id)
@@ -274,7 +274,7 @@ def create_comment(request, id):
 
 
 @api_view(['POST'])
-@login_required
+
 def like_comment(request, id):
     comment = Post_comment_model(id=id)
     user = User.objects.get(id=request.user.id)
@@ -303,7 +303,7 @@ def like_comment(request, id):
 
 
 @api_view(['POST'])
-@login_required
+
 def follow_unfollow(request, username):
     following = User.objects.get(id=request.user.id)
     user = User.objects.get(username=username)
@@ -331,7 +331,7 @@ def follow_unfollow(request, username):
 
 
 @api_view(['GET'])
-@login_required
+
 def notifications(request):
     user = User.objects.get(id=request.user.id)
     notification = Notification_model.objects.filter(user=user)
@@ -361,9 +361,11 @@ def login_view(request):
             )
 
 
+@api_view(['GET'])
 def logout_view(request):
+    print(dir(request))
     logout(request)
-    return HttpResponseRedirect(reverse("api-overview"))
+    return Response("logged out successfully")
 
 @api_view(['POST'])
 def register(request):
@@ -371,9 +373,12 @@ def register(request):
         username = request.data["username"]
         email = request.data["email"]
 
+
         # Ensure password matches confirmation
         password = request.data["password"]
         confirmation = request.data["confirmation"]
+        first_name=request.data["first_name"]
+        last_name=request.data["last_name"]
         if password != confirmation:
             return Response(
                 "Passwords must match."
@@ -382,12 +387,15 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.first_name=first_name
+            user.last_name=last_name
             user.save()
+            login(request, user)
             return Response("account created successfully")
         except IntegrityError:
             return Response(
                 "Username already taken."
             )
-        login(request, user)
+        
         
 

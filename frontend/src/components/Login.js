@@ -45,9 +45,11 @@ const Login = (props) =>{
           }).then( data => data.json())
           .then(
             data => {
-                console.log(data)
-                if(data==="Logged in Successfully"){
+                console.log(data.message)
+                if(data.message==="Logged in Successfully"){
+                    props.setUserId(data.user_id)
                     props.setIsLogged("true")
+                    
                 }
             }
           ).catch(function(error){

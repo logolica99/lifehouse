@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.db import connections
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.core import serializers as django_serializer
@@ -105,7 +106,8 @@ def following_posts(request,username):
 
     for i in following_id:
         posts = Post.objects.filter(user=User.objects.get(id=i))
-        posts_id = [i.id for i in posts]
+        posts_id = [l.id for l in posts]
+      
         all_posts = []
         for id in posts_id:
             post = Post.objects.get(id=id)
@@ -172,11 +174,85 @@ def following_posts(request,username):
 
 
 @api_view(['GET'])
+def user_specific_posts(request,username):
+    posts = Post.objects.filter(user=User.objects.get(username=username))
+    posts_id = [l.id for l in posts]
+    
+    all_posts = []
+    for id in posts_id:
+        post = Post.objects.get(id=id)
+        serializer = post_detail_serializer(post, many=False)
+        data = serializer.data
 
-def user_data(request, username):
+        data["username"] = User.objects.get(id=data["user"]).username
+        try:
+            data["profile_pic"] = User.objects.get(
+                id=data["user"]).profile_pic.url
+        except:
+            data["profile_pic"] = ""
+        try:
+            data["likes"] = Post_like_model.objects.filter(
+                post=post).count()
+        except:
+            data["likes"] = 0
+
+        post_liked = True
+        try:
+            Post_like_model.objects.get(user=User.objects.get(
+                username=username), post=post_liked)
+        except:
+            post_liked = False
+
+        data["liked"] = post_liked
+
+        comments = Post_comment_model.objects.filter(post=post)
+        comments_json = json.loads(
+            django_serializer.serialize('json', comments))
+        comments_data = []
+        for comment in comments_json:
+            try:
+                profile_pic = User.objects.get(
+                    id=comment["fields"]["user"]).profile_pic.url
+            except:
+                profile_pic = ""
+
+            comment_liked = True
+            try:
+                Comment_like_model.objects.get(user=User.objects.get(
+                    username=username), comment=Post_comment_model.objects.get(id=comment["pk"]))
+            except:
+                comment_liked = False
+
+            comments_data += [
+                [
+                    {"id": comment["pk"]},
+                    {"username": User.objects.get(
+                        id=comment["fields"]["user"]).username},
+                    {"profile_pic": profile_pic},
+                    {"content": comment["fields"]["content"]},
+                    {"created_at": comment["fields"]["created_at"]},
+                    {"likes": Post_comment_model.objects.get(
+                        id=comment["pk"]).likes.all().count()},
+                    {"liked": comment_liked},
+                ]
+            ]
+
+        data["comments"] = comments_data
+        all_posts.append(data)
+    return Response(all_posts)
+
+
+
+
+
+
+
+@api_view(['GET'])
+
+def user_data(request, username,request_user_id):
 
     user = User.objects.get(username=username)
-    logged_in = User.objects.get(id=request.user.id)
+    logged_in = User.objects.get(id=int(request_user_id))
 
     #data["followers"] = Follower_model.objects.filter(user=user).count()
     #data["following"] = user.following.count()
@@ -201,7 +277,7 @@ def user_data(request, username):
     data["followers"] = followers_data
 
     can_follow = True
-    if request.user.id == user.id:
+    if int(request_user_id) == user.id:
         can_follow = False
     data["can_follow"] = can_follow
 
@@ -287,7 +363,7 @@ def like_comment(request, id):
             like = Comment_like_model(comment=comment, user=user)
             like.save()
 
-            if commentuser.username != user.username:
+            if comment.user.username != user.username:
                 try:
                     pro_pic = user.profile_pic.url
                 except:
@@ -332,8 +408,8 @@ def follow_unfollow(request, username):
 
 @api_view(['GET'])
 
-def notifications(request):
-    user = User.objects.get(id=request.user.id)
+def notifications(request,username):
+    user = User.objects.get(username=username)
     notification = Notification_model.objects.filter(user=user)
     serializer = notifications_serializer(notification, many=True)
     return Response(serializer.data)
@@ -351,8 +427,10 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return Response(
-                "Logged in Successfully"
+            return Response({
+                'message':"Logged in Successfully",
+                'user_id':User.objects.get(username=username).id
+            }
             )
 
         else:

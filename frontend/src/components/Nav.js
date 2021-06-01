@@ -1,16 +1,32 @@
-const Nav = () =>{
-    return(
-        <div className="navbar">
+import { Link } from 'react-router-dom';
+
+const Nav = (props) => {
+    return (
+        <div className='navbar'>
             <ul>
-                <li>Logo</li>
-                <li>Home</li>
-                <li>Search</li>
-                <li>Notifications</li>
-                <li>Message</li>
-                <li>User</li>
+                <Link
+                    to={{ pathname: '/' }}
+                    className='link'>
+                    <li>Logo</li>
+                </Link>
+                <Link to='/' className='link'>
+                    <li>Home</li>
+                </Link>
+                <Link to='search' className='link'>
+                    <li>Search</li>
+                </Link>
+                <Link to='notifications' className='link'>
+                    <li>Notifications</li>
+                </Link>
+                <Link to='messages' className='link'>
+                    <li>Messages</li>
+                </Link>
+                <Link to='user' className='link'>
+                    <li>User</li>
+                </Link>
             </ul>
         </div>
-    )
-}
+    );
+};
 
-export default Nav
+export default Nav;

@@ -34,8 +34,7 @@ def apiOverview(request):
 
 
 @api_view(['GET'])
-
-def post_detail(request, id):
+def post_detail(request, id, request_user_id):
     post = Post.objects.get(id=id)
     serializer = post_detail_serializer(post, many=False)
     data = serializer.data
@@ -53,7 +52,7 @@ def post_detail(request, id):
     post_liked = True
     try:
         Post_like_model.objects.get(user=User.objects.get(
-            id=request.user.id), post=post_liked)
+            id=request_user_id), post=post)
     except:
         post_liked = False
 
@@ -72,7 +71,7 @@ def post_detail(request, id):
         comment_liked = True
         try:
             Comment_like_model.objects.get(user=User.objects.get(
-                id=request.user.id), comment=Post_comment_model.objects.get(id=comment["pk"]))
+                id=request_user_id), comment=Post_comment_model.objects.get(id=comment["pk"]))
         except:
             comment_liked = False
 
@@ -97,18 +96,17 @@ def post_detail(request, id):
 
 
 @api_view(['GET'])
-
-def following_posts(request,username):
-    following_id = []
+def following_posts(request, username):
+    following_id = [User.objects.get(username=username).id]
     for follower in Follower_model.objects.all():
         if follower.following == User.objects.get(username=username):
             following_id.append(follower.user.id)
-
+  
+    all_posts = []
     for i in following_id:
         posts = Post.objects.filter(user=User.objects.get(id=i))
         posts_id = [l.id for l in posts]
-      
-        all_posts = []
+
         for id in posts_id:
             post = Post.objects.get(id=id)
             serializer = post_detail_serializer(post, many=False)
@@ -129,7 +127,7 @@ def following_posts(request,username):
             post_liked = True
             try:
                 Post_like_model.objects.get(user=User.objects.get(
-                    username=username), post=post_liked)
+                    username=username), post=post)
             except:
                 post_liked = False
 
@@ -174,10 +172,10 @@ def following_posts(request,username):
 
 
 @api_view(['GET'])
-def user_specific_posts(request,username):
+def user_specific_posts(request, username):
     posts = Post.objects.filter(user=User.objects.get(username=username))
     posts_id = [l.id for l in posts]
-    
+
     all_posts = []
     for id in posts_id:
         post = Post.objects.get(id=id)
@@ -199,7 +197,7 @@ def user_specific_posts(request,username):
         post_liked = True
         try:
             Post_like_model.objects.get(user=User.objects.get(
-                username=username), post=post_liked)
+                username=username), post=post)
         except:
             post_liked = False
 
@@ -242,14 +240,8 @@ def user_specific_posts(request,username):
     return Response(all_posts)
 
 
-
-
-
-
-
 @api_view(['GET'])
-
-def user_data(request, username,request_user_id):
+def user_data(request, username, request_user_id):
 
     user = User.objects.get(username=username)
     logged_in = User.objects.get(id=int(request_user_id))
@@ -293,20 +285,18 @@ def user_data(request, username,request_user_id):
 
 
 @api_view(['POST'])
-
-def create_post(request):
+def create_post(request, request_user_id):
     data = request.data
     post = Post(user=User.objects.get(
-        id=request.user.id), content=data['content'])
+        id=request_user_id), content=data['content'])
     post.save()
     return Response("Item added successfully")
 
 
 @api_view(['POST'])
-
-def like_post(request, id):
+def like_post(request, id, request_user_id):
     post = Post.objects.get(id=id)
-    user = User.objects.get(id=request.user.id)
+    user = User.objects.get(id=request_user_id)
 
     if request.data["like"]:
         try:
@@ -331,9 +321,8 @@ def like_post(request, id):
 
 
 @api_view(['POST'])
-
-def create_comment(request, id):
-    user = User.objects.get(id=request.user.id)
+def create_comment(request, id, request_user_id):
+    user = User.objects.get(id=request_user_id)
     post = Post.objects.get(id=id)
     content = request.data["content"]
     comment = Post_comment_model(user=user, post=post, content=content)
@@ -350,10 +339,9 @@ def create_comment(request, id):
 
 
 @api_view(['POST'])
-
-def like_comment(request, id):
-    comment = Post_comment_model(id=id)
-    user = User.objects.get(id=request.user.id)
+def like_comment(request, id, request_user_id):
+    comment = Post_comment_model.objects.get(id=id)
+    user = User.objects.get(id=request_user_id)
 
     if request.data["like"]:
         try:
@@ -379,9 +367,8 @@ def like_comment(request, id):
 
 
 @api_view(['POST'])
-
-def follow_unfollow(request, username):
-    following = User.objects.get(id=request.user.id)
+def follow_unfollow(request, username, request_user_id):
+    following = User.objects.get(id=request_user_id)
     user = User.objects.get(username=username)
 
     if request.data["follow"]:
@@ -407,8 +394,7 @@ def follow_unfollow(request, username):
 
 
 @api_view(['GET'])
-
-def notifications(request,username):
+def notifications(request, username):
     user = User.objects.get(username=username)
     notification = Notification_model.objects.filter(user=user)
     serializer = notifications_serializer(notification, many=True)
@@ -417,19 +403,19 @@ def notifications(request,username):
 
 @api_view(['POST'])
 def login_view(request):
-    
+
     if request.method == "POST":
-        
+
         username = request.data["username"]
         password = request.data["password"]
-   
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             return Response({
-                'message':"Logged in Successfully",
-                'user_id':User.objects.get(username=username).id
+                'message': "Logged in Successfully",
+                'user_id': User.objects.get(username=username).id
             }
             )
 
@@ -445,18 +431,18 @@ def logout_view(request):
     logout(request)
     return Response("logged out successfully")
 
+
 @api_view(['POST'])
 def register(request):
     if request.method == "POST":
         username = request.data["username"]
         email = request.data["email"]
 
-
         # Ensure password matches confirmation
         password = request.data["password"]
         confirmation = request.data["confirmation"]
-        first_name=request.data["first_name"]
-        last_name=request.data["last_name"]
+        first_name = request.data["first_name"]
+        last_name = request.data["last_name"]
         if password != confirmation:
             return Response(
                 "Passwords must match."
@@ -465,8 +451,8 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
-            user.first_name=first_name
-            user.last_name=last_name
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
             login(request, user)
             return Response("account created successfully")
@@ -474,6 +460,3 @@ def register(request):
             return Response(
                 "Username already taken."
             )
-        
-        
-

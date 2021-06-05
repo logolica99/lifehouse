@@ -9,40 +9,60 @@ import Posts from './Posts';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 const Main = (props) => {
- 
     useEffect(() => {
         isLoggedView();
     }, [props.isLogged]);
 
     const logoutHandler = () => {
         props.setIsLogged(false);
-    };//component={Homepage} 
+    }; //component={Homepage}
     const isLoggedView = () => {
         if (props.isLogged === 'true') {
+            
             return (
                 <Router>
                     <div>
-                        <Nav/>
-                        <Route path='/' exact render={useless=>(<Homepage posts={props.posts}/>)}/>
+                    
+                        <Nav />
+                        <Route
+                            path='/'
+                            exact
+                            render={(useless) => (
+                                <Homepage
+                                    posts={props.posts}
+                                    userId={props.userId}
+                                    setCommentSubmit={props.setCommentSubmit}
+                                    setPostSubmit={props.setPostSubmit}
+                                />
+                            )}
+                        />
                         <Route path='/search' exact component={Search} />
                         <Route
                             path='/notifications'
                             exact
-                            render={useless=>(<Notifications notifications={props.notifications}/>)}
-                           
+                            render={(useless) => (
+                                <Notifications
+                                    notifications={props.notifications}
+                                />
+                            )}
                         />
                         <Route path='/messages' exact component={Message} />
                         <Route
                             path='/User'
-                            exact 
-                            render={useless=>(<User username={props.username}
-                                followers={props.followers}
-                                following={props.following}
-                                 userData={props.userData}/> )}
+                            exact
+                            render={(useless) => (
+                                <User
+                                    username={props.username}
+                                    followers={props.followers}
+                                    following={props.following}
+                                    userData={props.userData}
+                                    userId={props.userId}
+                                    commentSubmit = {props.commentSubmit}
+                                    setCommentSubmit={props.setCommentSubmit}
+
+                                />
+                            )}
                         />
-
-                        
-
                     </div>
                 </Router>
             );
@@ -53,8 +73,8 @@ const Main = (props) => {
                     username={props.username}
                     setUsername={props.setUsername}
                     setIsLogged={props.setIsLogged}
-                    userId = {props.userId}
-                    setUserId = {props.setUserId}
+                    userId={props.userId}
+                    setUserId={props.setUserId}
                 />
             </div>
         );

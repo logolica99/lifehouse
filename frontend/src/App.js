@@ -10,9 +10,12 @@ function App() {
         getIsLogged();
     }, []);
 
+
     const [posts, setPosts] = useState([]);
     const [notifications, setNotifications] = useState([]);
     const[userData,setUserData] = useState([]);
+    const [commentSubmit,setCommentSubmit] = useState(0);
+    const [postSubmit,setPostSubmit] = useState(0);
 
     const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
@@ -25,7 +28,7 @@ function App() {
         fetchNotifications();
         fetchUserData();
         saveIsLogged();
-    }, [isLogged]);
+    }, [isLogged,postSubmit,commentSubmit]);
 
     const saveIsLogged = () => {
         localStorage.setItem('isLogged', isLogged);
@@ -53,7 +56,7 @@ function App() {
         const post = await data.json();
         setPosts(post);
 
-        //  console.log(post);
+        //console.log(post);
     };
 
     const fetchNotifications = async () => {
@@ -91,6 +94,9 @@ function App() {
                 userData={userData}
                 followers={followers}
                 following={following}
+                commentSubmit={commentSubmit}
+                setCommentSubmit={setCommentSubmit}
+                setPostSubmit={setPostSubmit}
             />
         </div>
     );

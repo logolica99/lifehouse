@@ -12,16 +12,16 @@ const Nav = (props) => {
                 <Link to='/' className='link'>
                     <li>Home</li>
                 </Link>
-                <Link to='search' className='link'>
+                <Link to='/search' className='link'>
                     <li>Search</li>
                 </Link>
-                <Link to='notifications' className='link'>
+                <Link to='/notifications' className='link'>
                     <li>Notifications</li>
                 </Link>
-                <Link to='messages' className='link'>
+                <Link to='/messages' className='link'>
                     <li>Messages</li>
                 </Link>
-                <Link to='user' className='link'>
+                <Link to={`/user/${props.username}`} className='link'>
                     <li>User</li>
                 </Link>
             </ul>

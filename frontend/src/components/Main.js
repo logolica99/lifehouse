@@ -6,8 +6,10 @@ import Notifications from './Notifications';
 import Message from './Message';
 import User from './User';
 import Posts from './Posts';
+import Comments from './Comments';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 const Main = (props) => {
     useEffect(() => {
         isLoggedView();
@@ -18,16 +20,14 @@ const Main = (props) => {
     }; //component={Homepage}
     const isLoggedView = () => {
         if (props.isLogged === 'true') {
-            
             return (
                 <Router>
                     <div>
-                    
-                        <Nav />
+                        <Nav username={props.username}/>
                         <Route
                             path='/'
                             exact
-                            render={(useless) => (
+                            render={() => (
                                 <Homepage
                                     posts={props.posts}
                                     userId={props.userId}
@@ -40,7 +40,7 @@ const Main = (props) => {
                         <Route
                             path='/notifications'
                             exact
-                            render={(useless) => (
+                            render={() => (
                                 <Notifications
                                     notifications={props.notifications}
                                 />
@@ -48,18 +48,29 @@ const Main = (props) => {
                         />
                         <Route path='/messages' exact component={Message} />
                         <Route
-                            path='/User'
+                            path='/User/:username'
                             exact
-                            render={(useless) => (
+                            render={({ match }) => (
                                 <User
-                                    username={props.username}
+                                    username={match.params.username}
                                     followers={props.followers}
                                     following={props.following}
-                                    userData={props.userData}
+                                  
                                     userId={props.userId}
-                                    commentSubmit = {props.commentSubmit}
+                                    commentSubmit={props.commentSubmit}
                                     setCommentSubmit={props.setCommentSubmit}
-
+                                />
+                            )}
+                        />
+                        <Route
+                            path='/comments/:id'
+                            exact
+                            render={({ match }) => (
+                                <Comments
+                                    posts={props.posts}
+                                    comment_id={match.params.id}
+                                    userId={props.userId}
+                                    setCommentSubmit={props.setCommentSubmit}
                                 />
                             )}
                         />

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import connections
+from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.core import serializers as django_serializer
@@ -101,7 +102,7 @@ def following_posts(request, username):
     for follower in Follower_model.objects.all():
         if follower.following == User.objects.get(username=username):
             following_id.append(follower.user.id)
-  
+
     all_posts = []
     for i in following_id:
         posts = Post.objects.filter(user=User.objects.get(id=i))
@@ -420,8 +421,9 @@ def login_view(request):
             )
 
         else:
-            return Response(
-                "Invalid username and/or password."
+            return Response({
+               'message': "Invalid username and/or password."
+            }
             )
 
 
@@ -435,6 +437,7 @@ def logout_view(request):
 @api_view(['POST'])
 def register(request):
     if request.method == "POST":
+        print(request.data)
         username = request.data["username"]
         email = request.data["email"]
 
@@ -444,8 +447,9 @@ def register(request):
         first_name = request.data["first_name"]
         last_name = request.data["last_name"]
         if password != confirmation:
-            return Response(
-                "Passwords must match."
+            return Response({
+                'message':"Passwords must match."
+            }
             )
 
         # Attempt to create new user
@@ -455,8 +459,12 @@ def register(request):
             user.last_name = last_name
             user.save()
             login(request, user)
-            return Response("account created successfully")
+            return Response({
+                'message': "account created successfully",
+                'user_id': User.objects.get(username=username).id
+            })
         except IntegrityError:
-            return Response(
-                "Username already taken."
+            return Response({
+                'message':"Username already taken."
+            }
             )

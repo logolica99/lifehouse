@@ -8,7 +8,8 @@ import User from './User';
 import Posts from './Posts';
 import Comments from './Comments';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
 
 const Main = (props) => {
     useEffect(() => {
@@ -74,10 +75,12 @@ const Main = (props) => {
                                 />
                             )}
                         />
+
                     </div>
                 </Router>
             );
         }
+        
         return (
             <div>
                 <Login

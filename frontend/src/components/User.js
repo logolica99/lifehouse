@@ -56,7 +56,7 @@ const User = (props) => {
             );
             
             const user_data = await data.json();
-        console.log(user_data)
+        //console.log(user_data)
         setFollowers(user_data.followers.length);
         setFollowing(user_data.following.length);
         setUserData(user_data);

@@ -33,7 +33,7 @@ const Comments = (props) => {
                 return (
                     <div>
                         <Comment
-                            key={comment[0].id}
+                            key={comment.id}
                             comment={comment}
                             userId={props.userId}
                         />

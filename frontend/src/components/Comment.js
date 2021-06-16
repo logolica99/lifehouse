@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Comment = (props) => {
-    // console.log(props.comment[4])
-    const [commentLikes, setCommentLikes] = useState(props.comment[5].likes);
-    const [commentLiked, setCommentLiked] = useState(props.comment[6].liked);
+     //console.log(props.comment)
+    const [commentLikes, setCommentLikes] = useState(props.comment.likes);
+    const [commentLiked, setCommentLiked] = useState(props.comment.liked);
 
     const getDate = () => {
-        var post_created = new Date(props.comment[4].created_at);
+        var post_created = new Date(props.comment.created_at);
         var today = new Date();
         var differnce_in_time = today.getTime() - post_created.getTime();
         var differnce_in_minute = Math.round(differnce_in_time / (1000 * 60));
@@ -77,7 +77,7 @@ const Comment = (props) => {
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
         fetch(
-            `http://127.0.0.1:8000/api/comment/${props.comment[0].id}/${props.userId}/like`,
+            `http://127.0.0.1:8000/api/comment/${props.comment.id}/${props.userId}/like`,
             {
                 method: 'POST',
                 headers: {
@@ -103,7 +103,7 @@ const Comment = (props) => {
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
         fetch(
-            `http://127.0.0.1:8000/api/comment/${props.comment[0].id}/${props.userId}/like`,
+            `http://127.0.0.1:8000/api/comment/${props.comment.id}/${props.userId}/like`,
             {
                 method: 'POST',
                 headers: {
@@ -128,13 +128,13 @@ const Comment = (props) => {
 
     return (
         <div style={{ border: '1px solid black', width: '50%' }}>
-            <Link to={`/user/${props.comment[1].username}`}>
+            <Link to={`/user/${props.comment.username}`}>
                 <p style={{ color: 'green', fontWeight: 'bold' }}>
                     
-                    @{props.comment[1].username}
+                    @{props.comment.username}
                 </p>
             </Link>
-            <p style={{ color: 'red' }}> {props.comment[3].content} </p>
+            <p style={{ color: 'red' }}> {props.comment.content} </p>
             <p>Likes: {commentLikes}</p>
             {commentLiked ? (
                 <button onClick={unlikeHandler}>Unlike</button>

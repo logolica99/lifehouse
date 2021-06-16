@@ -75,21 +75,19 @@ def post_detail(request, id, request_user_id):
                 id=request_user_id), comment=Post_comment_model.objects.get(id=comment["pk"]))
         except:
             comment_liked = False
-
-        comments_data += [
-            [
-                {"id": comment["pk"]},
-                {"username": User.objects.get(
-                    id=comment["fields"]["user"]).username},
-                {"profile_pic": profile_pic},
-                {"content": comment["fields"]["content"]},
-                {"created_at": comment["fields"]["created_at"]},
-                {"likes": Post_comment_model.objects.get(
-                    id=comment["pk"]).likes.all().count()},
-                {"liked": comment_liked},
+            comments_data += [
+                {"id": comment["pk"],
+                 "username": User.objects.get(
+                    id=comment["fields"]["user"]).username,
+                 "profile_pic": profile_pic,
+                 "content": comment["fields"]["content"],
+                 "created_at": comment["fields"]["created_at"],
+                 "likes": Post_comment_model.objects.get(
+                    id=comment["pk"]).likes.all().count(),
+                 "liked": comment_liked
+                 },
             ]
-        ]
-
+    comments_data.sort(key=lambda item: item.get("id"), reverse=True)
     data["comments"] = comments_data
 
     # print(comments_json)
@@ -153,22 +151,22 @@ def following_posts(request, username):
                     comment_liked = False
 
                 comments_data += [
-                    [
-                        {"id": comment["pk"]},
-                        {"username": User.objects.get(
-                            id=comment["fields"]["user"]).username},
-                        {"profile_pic": profile_pic},
-                        {"content": comment["fields"]["content"]},
-                        {"created_at": comment["fields"]["created_at"]},
-                        {"likes": Post_comment_model.objects.get(
-                            id=comment["pk"]).likes.all().count()},
-                        {"liked": comment_liked},
-                    ]
+                    {"id": comment["pk"],
+                     "username": User.objects.get(
+                        id=comment["fields"]["user"]).username,
+                     "profile_pic": profile_pic,
+                     "content": comment["fields"]["content"],
+                     "created_at": comment["fields"]["created_at"],
+                     "likes": Post_comment_model.objects.get(
+                        id=comment["pk"]).likes.all().count(),
+                     "liked": comment_liked
+                     },
                 ]
 
+            comments_data.sort(key=lambda item: item.get("id"), reverse=True)
             data["comments"] = comments_data
             all_posts.append(data)
-
+    all_posts.sort(key=lambda item: item.get("id"), reverse=True)
     return Response(all_posts)
 
 
@@ -222,22 +220,23 @@ def user_specific_posts(request, username):
             except:
                 comment_liked = False
 
-            comments_data += [
-                [
-                    {"id": comment["pk"]},
-                    {"username": User.objects.get(
-                        id=comment["fields"]["user"]).username},
-                    {"profile_pic": profile_pic},
-                    {"content": comment["fields"]["content"]},
-                    {"created_at": comment["fields"]["created_at"]},
-                    {"likes": Post_comment_model.objects.get(
-                        id=comment["pk"]).likes.all().count()},
-                    {"liked": comment_liked},
+                comments_data += [
+                    {"id": comment["pk"],
+                     "username": User.objects.get(
+                        id=comment["fields"]["user"]).username,
+                     "profile_pic": profile_pic,
+                     "content": comment["fields"]["content"],
+                     "created_at": comment["fields"]["created_at"],
+                     "likes": Post_comment_model.objects.get(
+                        id=comment["pk"]).likes.all().count(),
+                     "liked": comment_liked
+                     },
                 ]
-            ]
+        comments_data.sort(key=lambda item: item.get("id"), reverse=True)
 
         data["comments"] = comments_data
         all_posts.append(data)
+    all_posts.sort(key=lambda item: item.get("id"), reverse=True)
     return Response(all_posts)
 
 
@@ -422,7 +421,7 @@ def login_view(request):
 
         else:
             return Response({
-               'message': "Invalid username and/or password."
+                'message': "Invalid username and/or password."
             }
             )
 
@@ -448,7 +447,7 @@ def register(request):
         last_name = request.data["last_name"]
         if password != confirmation:
             return Response({
-                'message':"Passwords must match."
+                'message': "Passwords must match."
             }
             )
 
@@ -465,6 +464,6 @@ def register(request):
             })
         except IntegrityError:
             return Response({
-                'message':"Username already taken."
+                'message': "Username already taken."
             }
             )

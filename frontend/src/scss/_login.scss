@@ -1,0 +1,97 @@
+.login {
+  overflow-y: hidden;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  @include breakpoint-down(small) {
+    grid-template-columns: 1fr 45545fr 1fr;
+  }
+
+  &__container {
+    grid-column: 2/3;
+    display: grid;
+    grid-template-rows: 1fr 1.3fr 1fr;
+    // align-self: center;
+  }
+  &__logo {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+ 
+  
+
+    > h1 {
+        color:#99A4E7;
+
+      
+        font-weight: 500;
+        
+        
+    
+    }
+  }
+  &__form {
+    // grid-row: 2/3;
+    background-color: $mediumDarkPurple;
+    border-radius: 2.5rem;
+    display: grid;
+    grid-template-rows: 1.5fr 3.5fr;
+    grid-template-columns: 1fr 5fr 1fr;
+    @include breakpoint-down(small) {
+      border-radius: 0rem;
+    }
+    > h2 {
+      grid-column: 2/3;
+      grid-row: 1/2;
+      align-self: center;
+      color: white;
+      font-weight: 500;
+    }
+
+    > form {
+      grid-row: 2/3;
+      grid-column: 2/3;
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 0.6875rem;
+      > input:nth-child(1) {
+        padding: 0.3125rem;
+        border: none;
+        &:focus {
+          outline: none !important;
+          border: #3e456f;
+          box-shadow: 0 0 10px #719ece;
+        }
+
+        @include breakpoint-down(small) {
+        }
+      }
+      > input:nth-child(2) {
+        border: none;
+        padding: 0.3125rem;
+        &:focus {
+          outline: none !important;
+          border: #3e456f;
+          box-shadow: 0 0 10px #719ece;
+        }
+        @include breakpoint-down(small) {
+        }
+      }
+      > p {
+        color: white;
+        > a {
+          color: rgb(178, 216, 223);
+        }
+      }
+
+      .login_button {
+        justify-self: end;
+
+        @include breakpoint-down(small) {
+        }
+      }
+    }
+  }
+}

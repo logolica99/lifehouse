@@ -82,7 +82,7 @@ const Main = (props) => {
         }
         
         return (
-            <div>
+         
                 <Login
                     username={props.username}
                     setUsername={props.setUsername}
@@ -90,14 +90,14 @@ const Main = (props) => {
                     userId={props.userId}
                     setUserId={props.setUserId}
                 />
-            </div>
+        
         );
     };
 
     return (
-        <div>
+        <div className="main">
             {isLoggedView()}
-            <button onClick={logoutHandler}>logout</button>
+            {/* <button onClick={logoutHandler}>logout</button> */}
         </div>
     );
 };

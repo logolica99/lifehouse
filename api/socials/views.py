@@ -467,3 +467,20 @@ def register(request):
                 'message': "Username already taken."
             }
             )
+
+
+@api_view(["GET"])
+def search_results(request,query_string):
+    username_of_all_users = [user.username for user in User.objects.all()]
+    query_array = query_string.split('_')
+    query_results=[]
+    
+    for query in query_array:
+        for username in username_of_all_users:
+            if query in username:
+                query_results.append(username)
+    query_results.sort()
+        
+   
+    return Response(query_results)
+

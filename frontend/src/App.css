@@ -1,8 +1,4 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+
 .navbar ul {
     display: flex;
     height: 10vh;
@@ -13,7 +9,14 @@
     color: white;
 }
 
-.link {
-    color: white;
-    text-decoration: none;
+.root{
+    height: 100%;
+}
+.App{
+    height: 100%;
+ 
+}
+.main{
+    height: 100%;
+  
 }

@@ -30,9 +30,9 @@ const Search = () => {
     e.preventDefault();
     setAfterResults(`Results for "${queryString}:"`)
     var queryWord = queryString.split(" ").join(" ");
+    const url = "http://192.168.0.103:8000/api";
 
-
-    const data = await fetch(`http://127.0.0.1:8000/api/query/${queryWord}`);
+    const data = await fetch(`${url}/query/${queryWord}`);
     const results = await data.json();
     //        console.log(results);
     setQueryResults(results);

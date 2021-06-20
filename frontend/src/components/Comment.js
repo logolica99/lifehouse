@@ -76,8 +76,9 @@ const Comment = (props) => {
     const likeHandler = (e) => {
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
+        const url = "http://192.168.0.103:8000/api";
         fetch(
-            `http://127.0.0.1:8000/api/comment/${props.comment.id}/${props.userId}/like`,
+            `${url}/comment/${props.comment.id}/${props.userId}/like`,
             {
                 method: 'POST',
                 headers: {

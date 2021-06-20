@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Register from "./Register";
-import logo from "./around-the-world.svg";
+
 
 const Login = (props) => {
   const [password, setPassword] = useState("");
@@ -89,7 +89,8 @@ const Login = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    fetch("http://127.0.0.1:8000/api/login", {
+    const url = "http://192.168.0.103:8000/api";
+    fetch(`${url}/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

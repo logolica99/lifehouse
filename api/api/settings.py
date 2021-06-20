@@ -15,7 +15,7 @@ SECRET_KEY = 'h=t!&a+uht!&dz%x=g_4r(j4&=r_uxv0&skbwkz*guvq$onz63'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','192.168.0.103']
 
 
 # Application definition
@@ -122,7 +122,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'socials/static/socials/images')
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://192.168.0.109:3000",
-    "http://127.0.0.1:3000"
+    "http://192.168.0.103:3000",
+    "http://127.0.0.1:3000",
+
 
 ]

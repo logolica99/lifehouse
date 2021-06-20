@@ -23,8 +23,10 @@ const Main = (props) => {
         if (props.isLogged === 'true') {
             return (
                 <Router>
+                    
                     <div>
                         <Nav username={props.username}/>
+                        <div className="upper-gap"></div>
                         <Route
                             path='/'
                             exact
@@ -75,8 +77,10 @@ const Main = (props) => {
                                 />
                             )}
                         />
-
+                        
+                    
                     </div>
+                   
                 </Router>
             );
         }

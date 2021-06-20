@@ -75,8 +75,9 @@ const Post = (props) => {
     const likeHandler = (e) => {
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
-        var url = `http://127.0.0.1:8000/api/post/${props.post.id}/${props.userId}/like`;
-        fetch(url, {
+        const url = "http://192.168.0.103:8000/api";
+        var url_like = `${url}/post/${props.post.id}/${props.userId}/like`;
+        fetch(url_like, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -100,8 +101,9 @@ const Post = (props) => {
     const unlikeHandler = (e) => {
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
-        var url = `http://127.0.0.1:8000/api/post/${props.post.id}/${props.userId}/like`;
-        fetch(url, {
+        const url = "http://192.168.0.103:8000/api";
+        var url_dislike = `${url}/post/${props.post.id}/${props.userId}/like`;
+        fetch(url_dislike, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

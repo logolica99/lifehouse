@@ -3,7 +3,8 @@ import CreatePost from './CreatePost';
 
 const Homepage = (props) => {
     return (
-        <div>
+        <div className="homepage">
+            
             <CreatePost
                 userId={props.userId}
                 setPostSubmit={props.setPostSubmit}

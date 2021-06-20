@@ -132,7 +132,8 @@ const Register = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    fetch("http://127.0.0.1:8000/api/register", {
+    const url = "http://192.168.0.103:8000/api";
+    fetch(`${url}/register`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

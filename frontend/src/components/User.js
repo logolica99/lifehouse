@@ -38,8 +38,9 @@ const User = (props) => {
     const[userData,setUserData] = useState([]);
     
     const fetchUserPosts = async () => {
+        const url = "http://192.168.0.103:8000/api";
         const data = await fetch(
-            `http://127.0.0.1:8000/api/user_specific_posts/${props.username}`
+            `${url}/user_specific_posts/${props.username}`
         );
         
         const post = await data.json();
@@ -50,9 +51,9 @@ const User = (props) => {
     const [already_following,setAlreadyFollowing] = useState(userData.already_following);
     
     const fetchUserData = async () => {
-        
+        const url = "http://192.168.0.103:8000/api";
         const data = await fetch(
-            `http://127.0.0.1:8000/api/user/${props.username}/${props.userId}`
+            `${url}/user/${props.username}/${props.userId}`
             );
             
             const user_data = await data.json();
@@ -68,7 +69,8 @@ const User = (props) => {
     const followButtonHandler = (e) =>{
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
-        fetch(`http://127.0.0.1:8000/api/follow/${userData.username}/${props.userId}`,{
+        const url = "http://192.168.0.103:8000/api";
+        fetch(`${url}/follow/${userData.username}/${props.userId}`,{
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -91,7 +93,8 @@ const User = (props) => {
     const unfollowButtonHandler = (e) =>{
         e.preventDefault();
         var csrftoken = getCookie('csrftoken');
-        fetch(`http://127.0.0.1:8000/api/follow/${userData.username}/${props.userId}`,{
+        const url = "http://192.168.0.103:8000/api";
+        fetch(`${url}/follow/${userData.username}/${props.userId}`,{
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',

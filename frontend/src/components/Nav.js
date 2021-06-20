@@ -1,32 +1,55 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import home_png from "./img/icons/home.png";
+import search_png from "./img/icons/searchh.png";
+import notification_red_png from "./img/icons/notification_red.png";
+import messages_png from "./img/icons/message.png";
+import user_png from "./img/icons/user.png";
+import notification_png from "./img/icons/notification_white.svg";
+import logo from './img/icons/around-the-world.png'
+
 
 const Nav = (props) => {
-    return (
-        <div className='navbar'>
-            <ul>
-                <Link
-                    to={{ pathname: '/' }}
-                    className='link'>
-                    <li>Logo</li>
-                </Link>
-                <Link to='/' className='link'>
-                    <li>Home</li>
-                </Link>
-                <Link to='/search' className='link'>
-                    <li>Search</li>
-                </Link>
-                <Link to='/notifications' className='link'>
-                    <li>Notifications</li>
-                </Link>
-                <Link to='/messages' className='link'>
-                    <li>Messages</li>
-                </Link>
-                <Link to={`/user/${props.username}`} className='link'>
-                    <li>User</li>
-                </Link>
-            </ul>
-        </div>
-    );
+  return (
+    <div className="navbar">
+      <ul>
+          <div className="gap"></div>
+        <Link to={{ pathname: "/" }} className="weblogo">
+          <li> <img src={logo} alt="" /></li>
+        </Link>
+        <div className="gap"></div>
+        <Link to="/" className="home_logo">
+          <li>
+            <img src={home_png} alt="" />
+          </li>
+        </Link>
+        <Link to="/search" className="search_logo ">
+          <li>
+            {" "}
+            <img src={search_png} alt="" />
+          </li>
+        </Link>
+        <Link to="/notifications" className="notification_logo">
+          <li>
+            {" "}
+            <img src={notification_red_png} alt="" />
+          </li>
+        </Link>
+        <Link to="/messages" className="messages_logo ">
+          <li>
+            {" "}
+            <img src={messages_png} alt="" />
+          </li>
+        </Link>
+        <Link to={`/user/${props.username}`} className="user_logo ">
+          <li>
+            {" "}
+            <img src={user_png} alt="" />
+          </li>
+        </Link>
+
+      </ul>
+    </div>
+  );
 };
 
 export default Nav;

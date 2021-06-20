@@ -47,8 +47,9 @@ function App() {
   };
 
   const fetchPosts = async () => {
+    const url = "http://192.168.0.103:8000/api";
     const data = await fetch(
-      `http://127.0.0.1:8000/api/following_posts/${username}`
+      `${url}/following_posts/${username}`
     );
 
     const post = await data.json();
@@ -58,8 +59,9 @@ function App() {
   };
 
   const fetchNotifications = async () => {
+    const url = "http://192.168.0.103:8000/api";
     const data = await fetch(
-      `http://127.0.0.1:8000/api/notifications/${username}`
+      `${url}/notifications/${username}`
     );
 
     const notification = await data.json();

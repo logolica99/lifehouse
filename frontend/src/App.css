@@ -1,13 +1,4 @@
 
-.navbar ul {
-    display: flex;
-    height: 10vh;
-    list-style: none;
-    background-color: #1c1f33;
-    justify-content: space-around;
-    align-items: center;
-    color: white;
-}
 
 .root{
     height: 100%;

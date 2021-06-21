@@ -8,11 +8,13 @@ const Homepage = (props) => {
         username={props.username}
         userId={props.userId}
         setPostSubmit={props.setPostSubmit}
+        apiUrl={props.apiUrl}
       />
       <Posts
         posts={props.posts}
         userId={props.userId}
         setCommentSubmit={props.setCommentSubmit}
+        apiUrl={props.apiUrl}
       />
     </div>
   );

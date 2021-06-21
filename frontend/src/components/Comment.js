@@ -73,8 +73,8 @@ const Comment = (props) => {
   const likeHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/comment/${props.comment.id}/${props.userId}/like`, {
+
+    fetch(`${props.apiUrl}/comment/${props.comment.id}/${props.userId}/like`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -97,9 +97,9 @@ const Comment = (props) => {
   const unlikeHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
+
     fetch(
-      `${url}/comment/${props.comment.id}/${props.userId}/like`,
+      `${props.apiUrl}/comment/${props.comment.id}/${props.userId}/like`,
       {
         method: "POST",
         headers: {

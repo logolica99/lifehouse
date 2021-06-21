@@ -124,6 +124,7 @@ const Register = (props) => {
           setIsLogged={props.setIsLogged}
           userId={props.userId}
           setUserId={props.setUserId}
+          apiUrl={props.apiUrl}
         />
       );
     }
@@ -132,8 +133,8 @@ const Register = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/register`, {
+ 
+    fetch(`${props.apiUrl}/register`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

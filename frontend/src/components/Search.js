@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Search = () => {
+const Search = (props) => {
   const [queryString, setQueryString] = useState("");
   const [queryResults, setQueryResults] = useState([]);
   const [afterSearch, setAfterResults] = useState("");
@@ -30,9 +30,9 @@ const Search = () => {
     e.preventDefault();
     setAfterResults(`Results for "${queryString}:"`);
     var queryWord = queryString.split(" ").join(" ");
-    const url = "http://192.168.0.103:8000/api";
+    
 
-    const data = await fetch(`${url}/query/${queryWord}`);
+    const data = await fetch(`${props.apiUrl}/query/${queryWord}`);
     const results = await data.json();
     //        console.log(results);
     setQueryResults(results);

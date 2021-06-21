@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     getIsLogged();
   }, []);
-
+  const [apiUrl,setAPIUrl] = useState("http://192.168.0.103:8000/api");
   const [posts, setPosts] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
@@ -47,9 +47,9 @@ function App() {
   };
 
   const fetchPosts = async () => {
-    const url = "http://192.168.0.103:8000/api";
+    
     const data = await fetch(
-      `${url}/following_posts/${username}`
+      `${apiUrl}/following_posts/${username}`
     );
 
     const post = await data.json();
@@ -59,9 +59,9 @@ function App() {
   };
 
   const fetchNotifications = async () => {
-    const url = "http://192.168.0.103:8000/api";
+ 
     const data = await fetch(
-      `${url}/notifications/${username}`
+      `${apiUrl}/notifications/${username}`
     );
 
     const notification = await data.json();
@@ -82,6 +82,7 @@ function App() {
         commentSubmit={commentSubmit}
         setCommentSubmit={setCommentSubmit}
         setPostSubmit={setPostSubmit}
+        apiUrl={apiUrl}
       />
     </div>
   );

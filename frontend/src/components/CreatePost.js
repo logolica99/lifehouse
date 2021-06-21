@@ -28,8 +28,8 @@ const CreatePost = (props) => {
     e.preventDefault();
 
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/posts/create/${props.userId}`, {
+    
+    fetch(`${props.apiUrl}/posts/create/${props.userId}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

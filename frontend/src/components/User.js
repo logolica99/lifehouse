@@ -36,8 +36,8 @@ const User = (props) => {
   const [userData, setUserData] = useState([]);
 
   const fetchUserPosts = async () => {
-    const url = "http://192.168.0.103:8000/api";
-    const data = await fetch(`${url}/user_specific_posts/${props.username}`);
+
+    const data = await fetch(`${props.apiUrl}/user_specific_posts/${props.username}`);
 
     const post = await data.json();
 
@@ -49,8 +49,8 @@ const User = (props) => {
   );
 
   const fetchUserData = async () => {
-    const url = "http://192.168.0.103:8000/api";
-    const data = await fetch(`${url}/user/${props.username}/${props.userId}`);
+  
+    const data = await fetch(`${props.apiUrl}/user/${props.username}/${props.userId}`);
 
     const user_data = await data.json();
     //console.log(user_data)
@@ -66,8 +66,8 @@ const User = (props) => {
   const followButtonHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/follow/${userData.username}/${props.userId}`, {
+
+    fetch(`${props.apiUrl}/follow/${userData.username}/${props.userId}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -90,8 +90,8 @@ const User = (props) => {
   const unfollowButtonHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/follow/${userData.username}/${props.userId}`, {
+
+    fetch(`${props.apiUrl}/follow/${userData.username}/${props.userId}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

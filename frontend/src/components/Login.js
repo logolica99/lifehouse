@@ -76,6 +76,7 @@ const Login = (props) => {
           setIsLogged={props.setIsLogged}
           userId={props.userId}
           setUserId={props.setUserId}
+          apiUrl={props.apiUrl}
         />
       );
     }
@@ -89,8 +90,8 @@ const Login = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     var csrftoken = getCookie("csrftoken");
-    const url = "http://192.168.0.103:8000/api";
-    fetch(`${url}/login`, {
+
+    fetch(`${props.apiUrl}/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

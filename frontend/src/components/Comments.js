@@ -28,10 +28,11 @@ const Comments = (props) => {
           userId={props.userId}
           postId={props.comment_id}
           setCommentSubmit={props.setCommentSubmit}
+          apiUrl={props.apiUrl}
         />
         {comments.map((comment) => {
           return (
-            <Comment key={comment.id} comment={comment} userId={props.userId} />
+            <Comment key={comment.id} comment={comment} userId={props.userId}  apiUrl={props.apiUrl}/>
           );
         })}
       </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Search = () => {
   const [queryString, setQueryString] = useState("");
   const [queryResults, setQueryResults] = useState([]);
-  const [afterSearch,setAfterResults] = useState('');
+  const [afterSearch, setAfterResults] = useState("");
 
   const queryFormHandler = (e) => {
     setQueryString(e.target.value);
@@ -28,7 +28,7 @@ const Search = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setAfterResults(`Results for "${queryString}:"`)
+    setAfterResults(`Results for "${queryString}:"`);
     var queryWord = queryString.split(" ").join(" ");
     const url = "http://192.168.0.103:8000/api";
 
@@ -39,21 +39,29 @@ const Search = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <input type="text" onChange={queryFormHandler} value={queryString} />
-      <input type="submit" value="Search" />
-        <h2>{afterSearch}</h2>
-      {queryResults.map((result) => {
-        return (
-          <div>
-            <Link to={`/user/${result}`}>
-              <h3>@{result}</h3>
-            </Link>
-            <hr />
-          </div>
-        );
-      })}
-    </form>
+    <div className="search_page">
+      <div className="search_container">
+        <form onSubmit={submitHandler}>
+          <input type="text" onChange={queryFormHandler} value={queryString} />
+          <button type="submit">Search</button>
+        </form>
+        <h2 className="search_query_text">{afterSearch}</h2>
+
+        <div className="allresults">
+          {queryResults.map((result) => {
+            return (
+              <div className="result_container">
+                <Link to={`/user/${result}`}>
+                  <h3 class="result">@{result}</h3>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+
+    </div>
   );
 };
 

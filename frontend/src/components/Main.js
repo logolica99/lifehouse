@@ -24,7 +24,7 @@ const Main = (props) => {
             return (
                 <Router>
                     
-                    <div>
+                    <div className="tooop">
                         <Nav username={props.username}/>
                         <div className="upper-gap"></div>
                         <Route
@@ -33,6 +33,7 @@ const Main = (props) => {
                             render={() => (
                                 <Homepage
                                     posts={props.posts}
+                                    username={props.username}
                                     userId={props.userId}
                                     setCommentSubmit={props.setCommentSubmit}
                                     setPostSubmit={props.setPostSubmit}
@@ -62,6 +63,7 @@ const Main = (props) => {
                                     userId={props.userId}
                                     commentSubmit={props.commentSubmit}
                                     setCommentSubmit={props.setCommentSubmit}
+                                    setIsLogged={props.setIsLogged}
                                 />
                             )}
                         />

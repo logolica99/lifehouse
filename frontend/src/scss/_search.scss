@@ -1,0 +1,100 @@
+.search_page{
+
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    @include breakpoint-down(small){
+        grid-template-columns: 1fr 999fr 1fr;
+    }
+    
+    .search_container{
+        grid-column: 2/3;
+        
+
+
+        >form{
+            margin: 20px 0px;
+          width:100%;
+          background-color: #A9AECD;
+          border-radius: 17px;
+          display: flex;
+          justify-content:center;
+          @include breakpoint-down(small){
+            width:85%;
+            margin-left: 30px;
+
+          }
+    
+       
+            >input{
+                
+     
+              
+                height:40px;
+                border:none;
+                border-radius: 17px;
+                padding:20px;
+                background-color: #A9AECD;
+                width: 80%;
+                color:#303453;
+
+            
+                &:focus {
+                    outline: none !important;
+
+                  }
+
+                @include breakpoint-down(small){
+           
+
+                }
+
+            }
+            >button{
+                grid-row:1/2;
+                border: none;
+                background: none;
+                
+                color: #2D3251;
+                font-size: 1rem;
+                font-weight: bold;
+                
+                cursor: pointer;
+                @include breakpoint-down(small){
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .search_query_text{
+        color:#B2BAED;
+
+    }
+    .allresults{
+
+        .result_container{
+
+
+            background-color: #454C77;
+            margin: 10px 0;
+            border-radius: 20px;
+            height: 40px;
+            .result{
+                text-decoration: none;
+                color:white;
+                font-weight: 400;
+                margin-left: 20px;
+                padding-top: 10px;
+            }
+
+            @include breakpoint-down(small){
+                border-radius: 0;
+            }
+
+        }
+
+    }
+
+}
+

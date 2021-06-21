@@ -1,6 +1,6 @@
 const Message= () =>{
     return(
-        <h1>Message</h1>
+        <h1 style={{color:"white"}}>Message(work in progress)</h1>
     )
 }
 

@@ -1,0 +1,21 @@
+.comment_page{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+    @include  breakpoint-down(medium){
+        grid-template-columns: 1fr 999fr 1fr;
+    }
+
+}
+.comment_container{
+    height: 100%;
+    grid-column: 2/3;
+
+    border-left:1px solid $veryLightPurple ;
+    border-right:1px solid $veryLightPurple ;
+
+    @include breakpoint-down(small){
+        border:none;
+    }
+}

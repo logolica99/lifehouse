@@ -1,0 +1,78 @@
+.user {
+    
+
+
+  .user_data_container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    margin-bottom: 1.875rem;
+    padding-top: 1.25rem;
+    
+    @include breakpoint-down(medium) {
+      grid-template-columns: 1fr 9999fr 1fr;
+     // background-color: #333b6b;
+    }
+  }
+
+  .user_data {
+    grid-column: 2/3;
+    color: white;
+ border-bottom: 0.125rem solid $veryLightPurple;
+
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    @include breakpoint-down(small){
+      border:none;
+    }
+    .user_pic {
+      width: 8.125rem;
+      justify-self: center;
+
+      @include breakpoint-down(medium){
+          width: 5rem;
+      }
+    }
+    .user_data_without_image {
+        align-self: center;
+      grid-column: 2/3;
+      .fullname {
+        font-size: 1.875rem;
+        font-weight: 500;
+        margin: 1.875rem 0px 0.625rem 0px;
+        @include breakpoint-down(medium){
+            margin-top: 1.25rem;
+        }
+      }
+      .user_data_username {
+          margin-bottom: 0.625rem;
+      }
+      .followers {
+         
+        display: flex;
+        padding-bottom:1.875rem ;
+
+        >p{
+            margin-right: 0.625rem;
+        }
+        .follow_number{
+            font-weight: bold;
+        }
+      }
+      .follow {
+          padding: 0.5rem 1rem;
+          margin-bottom: 0.9375rem;
+      }
+    }
+  }
+  .user_posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @include breakpoint-down(medium) {
+      grid-template-columns: 1fr 9999fr 1fr;
+    }
+    .user_post {
+      grid-column: 2/3;
+    }
+  }
+}

@@ -36,11 +36,14 @@ body{
     color:white;
     background-color: $buttonBackground;
     border: none;
-    padding:10px 20px;
-    border-radius: 10px;
-    font-size: 16px;
+    padding:0.625rem 1.25rem;
+    border-radius: 0.625rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
+    &:hover{
+        background-color: #e74160;;
+    }
 }
 
 
@@ -71,3 +74,43 @@ input{
 .upper-gap{
     padding-top:3.5625rem;
 }
+.homepage{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    @include breakpoint-down(medium){
+        grid-template-columns: 1fr 9999fr 1fr;
+    }
+}
+
+.username_pic {
+   
+   // border-bottom: 1px solid $veryLightPurple;
+    display: flex;
+    padding:0.9375rem;
+    align-items: center;
+
+    @include breakpoint-down(medium){
+        border:none;
+        //border-top: 1px solid $veryLightPurple;
+    
+        padding:0.625rem;
+    }
+
+    .profile-pic {
+      width: 2.5rem;
+      @include breakpoint-down(medium){
+        width:1.875rem;
+    }
+
+    }
+    .username {
+        color:white;
+        font-weight: 500;
+        margin-left: 0.475rem;
+    }
+  }
+
+
+  .tooop{
+      height: calc(100% - 3.5625rem);
+  }

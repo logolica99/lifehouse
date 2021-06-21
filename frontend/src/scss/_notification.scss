@@ -1,0 +1,48 @@
+.notifications{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @include breakpoint-down(small){
+        grid-template-columns: 1fr 9999fr 1fr;
+    }
+
+    .notification_container{
+        grid-column: 2/3;
+
+        .notification{
+
+            margin:20px 0px;
+            background-color: #454C77;
+            display: flex;
+            height: 80px;
+            align-items: center;
+
+            border-radius: 20px;
+
+            @include breakpoint-down(small){
+                border-radius: 0;
+            }
+
+        
+            .username{
+                color: white;
+                font-weight: bold;
+                font-size: 20px;
+                margin-left: 30px;
+                @include breakpoint-down(small){
+                   font-size: 18px;
+                }
+    
+            }
+            .content{
+                color:white;
+                font-size: 20px;
+                margin-left: 8px;
+                @include breakpoint-down(small){
+                    font-size: 18px;
+                 }
+            } 
+
+        }
+    }
+}

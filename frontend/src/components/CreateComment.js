@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import default_profile_pic from "./img/icons/default_profile_pic.png";
+
 
 const CreateComment = (props) => {
     const getCookie = (name) => {
@@ -50,14 +52,16 @@ const CreateComment = (props) => {
     }
 
     return (
-        <div>
+        <div className="create_new_comment">
+            <img src={default_profile_pic} alt="" />
             <form onSubmit={createCommentFormHandler}>
                 <input
                     type='text'
                     value={commentData}
                     onChange={createCommentChangeHandler}
+                    placeholder="Add a comment..."
                 />
-                <button type="submit">Comment</button>
+                <button type="submit">Post</button>
             </form>
         </div>
     );

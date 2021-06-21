@@ -1,0 +1,57 @@
+.create_new_comment{
+    padding:0.9375rem;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid $veryLightPurple;
+    >img{
+        width:2.5rem;
+
+        align-self: center;
+        margin-right:0.625rem;
+        @include breakpoint-down(small){
+            padding:0;
+            width:1.875rem;
+            align-self: center;
+        }
+    }
+    >form{
+        width:85%;
+        background-color: #A9AECD;
+        border-radius: 1.25rem;
+        display: flex;
+        justify-content:center;
+        @include breakpoint-down(small){
+            border-radius: 0.625rem;
+        }
+
+        >input{
+            border:none;
+            background-color: #A9AECD;
+            height:3.125rem;
+            color:#202335;
+            border-radius: 1.25rem;
+            width: 80%;
+            &:focus {
+                outline: none !important;
+                
+              }
+              @include breakpoint-down(small){
+                  height: 1.875rem;
+                  border-radius: 0.625rem;
+              }
+        }
+        >button{
+            border: none;
+            background:none;
+            margin:0;
+            padding: 0;
+            color:#2D3251;
+            font-weight: bold;
+            font-size: 0.9375rem;
+            cursor: pointer;
+
+            
+            
+        }
+    }
+}

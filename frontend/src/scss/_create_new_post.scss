@@ -1,0 +1,79 @@
+.newpost {
+    margin-top: 1.125rem;
+    margin-bottom: 1.125rem;
+  grid-column: 2/3;
+  background-color:#60658654;
+
+  width: 100%;
+  border-radius: 1.875rem;
+
+  //  border: 1px solid $veryLightPurple;
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+  @include breakpoint-down(medium){
+      border-radius: 0px;
+      margin-top: 0px;
+  }
+  
+
+.create-post{
+  grid:1/2;
+}
+
+  > form {
+    grid-row: 2/3;
+    display: grid;
+
+    grid-template-rows: 2fr 1fr;
+    > textarea{
+      grid-row: 1/2;
+      border:none;
+        height: 100%;
+        background-color:#60658654;
+        color:white;
+        font-size: 1.25rem;
+        margin:.3125rem 0.625rem 0px 0.625rem;
+        resize: none;
+      //background-color: $darkPurple;
+      &::placeholder{
+          color: rgba(255, 255, 255, 0.637);
+          padding:0.625rem;
+      }
+
+
+      &:focus {
+        outline: none !important;
+        border: #3e456f;
+        box-shadow: 0 0 0.625rem #fdfdfd48;
+      }
+
+      @include breakpoint-down(medium){
+        border:none;
+        
+    }
+    }
+
+    .postButton {
+     //   border-top: 1px solid $veryLightPurple;
+        grid-row: 2/3;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding:0px 0.9375rem;
+
+        @include breakpoint-down(medium){
+            border:none;
+  
+           // border-bottom: 1px solid $veryLightPurple;
+            padding: 0.8125rem 0.9375rem;
+        }
+      > button {
+        
+        @include breakpoint-down(medium){
+            padding: 0.625rem 1.25rem;
+        }
+
+      }
+    }
+  }
+}

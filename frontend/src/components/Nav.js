@@ -14,36 +14,36 @@ const Nav = (props) => {
       <ul>
           <div className="gap"></div>
         <Link to={{ pathname: "/" }} className="weblogo">
-          <li> <img src={logo} alt="" /></li>
+          <li> <img title="lifehouse" src={logo} alt="" /></li>
         </Link>
         <div className="gap"></div>
         <Link to="/" className="home_logo">
           <li>
-            <img src={home_png} alt="" />
+            <img title="Home" src={home_png} alt="" />
           </li>
         </Link>
         <Link to="/search" className="search_logo ">
           <li>
             {" "}
-            <img src={search_png} alt="" />
+            <img title="Search" src={search_png} alt="" />
           </li>
         </Link>
         <Link to="/notifications" className="notification_logo">
           <li>
             {" "}
-            <img src={notification_red_png} alt="" />
+            <img title="Notifications" src={notification_png} alt="" />
           </li>
         </Link>
         <Link to="/messages" className="messages_logo ">
           <li>
             {" "}
-            <img src={messages_png} alt="" />
+            <img title="Messages" src={messages_png} alt="" />
           </li>
         </Link>
         <Link to={`/user/${props.username}`} className="user_logo ">
           <li>
             {" "}
-            <img src={user_png} alt="" />
+            <img title="Profile" src={user_png} alt="" />
           </li>
         </Link>
 

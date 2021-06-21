@@ -6,7 +6,7 @@ const Posts = (props) => {
     //  console.log(props.posts)
 
     return (
-        <div>
+        <div className="allposts">
             {props.posts.map((post) => {
                 return (
                     <div>

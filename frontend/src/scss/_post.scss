@@ -1,0 +1,73 @@
+.post {
+  display: grid;
+  background-color: #42476e;
+  grid-template-rows: 1fr auto 0.7fr 0.5fr 0.5fr;
+  margin-bottom: 0.9375rem;
+  border-radius: 1.875rem;
+ 
+  @include breakpoint-down(medium) {
+    border: none;
+    border-radius: 0px;
+    // border-bottom: 1px solid $veryLightPurple;
+  }
+
+  &-content {
+    grid-row: 2/3;
+    color: white;
+
+    //border-bottom: 1px solid $veryLightPurple;
+    padding: 0.9375rem;
+    @include breakpoint-down(medium) {
+      border: none;
+    }
+  }
+  &-likes {
+    grid-row: 4/5;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 500;
+    align-self: center;
+    margin-left: 0.9375rem;
+  }
+  &-like {
+    width: 1.5625rem;
+    @include breakpoint-down(small) {
+      width: 1.25rem;
+    }
+  }
+  &-comment {
+    width: 1.5625rem;
+    margin-left: 0.625rem;
+    @include breakpoint-down(small) {
+      width: 1.25rem;
+    }
+  }
+
+  &-commentAndlike {
+    grid-row: 3/4;
+
+    align-self: center;
+    margin-left: 0.9375rem;
+  }
+  &-time {
+    grid-row: 5/6;
+    color: #b2baed;
+ 
+
+    font-size: 0.75rem;
+    margin-left: 0.9375rem;
+    @include breakpoint-down(medium){
+      align-self: center;
+    }
+  }
+}
+
+.post_profile {
+  grid-row: 1/2;
+
+  //border-bottom: 1px solid $veryLightPurple;
+  @include breakpoint-down(medium) {
+    border: none;
+  }
+}

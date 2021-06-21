@@ -5,35 +5,43 @@
   width:100%;
   height: 3.5625rem;
   list-style: none;
-  background-color: #1C1F33;
+  background-color: #1c1f3365;
+  backdrop-filter: blur(3px);
 
   align-items: center;
   color: white;
 
 }
 .gap{
-    flex:.5;
+    flex:1.6;
     @include breakpoint-down(small){
         flex:.7;
     }
 }
 .weblogo{
-    flex:1;
-
+    flex:11;
+    
     @include breakpoint-down(small){
         flex:2.6;
     }
+
     > li img{
         width:3.125rem;
         @include breakpoint-down(small){
            width: 2.5rem;
         }
-    } flex:4;
+    } 
+    
 }
 .home_logo{
     flex:1;
     display: flex;
     justify-content: center;
+    &:hover{
+        background-color: #373d64;
+        border-radius: 1.875rem;
+       
+    }
     > li img{
         width:1.6875rem;
         @include breakpoint-down(small){
@@ -45,6 +53,11 @@
     display: flex;
     justify-content: center;
     flex:1;
+    &:hover{
+        background-color: #373d64;
+        border-radius: 1.875rem;
+       
+    }
     > li img{
         width:1.5625rem;
         @include breakpoint-down(small){
@@ -56,6 +69,11 @@
     flex:1;
     display: flex;
     justify-content: center;
+    &:hover{
+        background-color: #373d64;
+        border-radius: 1.875rem;
+       
+    }
     > li img{
         width:1.375rem;
         @include breakpoint-down(small){
@@ -67,6 +85,11 @@
     flex:1;
     display: flex;
     justify-content: center;
+    &:hover{
+        background-color: #373d64;
+        border-radius: 1.875rem;
+       
+    }
     > li img{
         width:1.5625rem;
         @include breakpoint-down(small){
@@ -78,6 +101,11 @@
     flex:0.7;
     display: flex;
     justify-content: center;
+    &:hover{
+        background-color: #373d64;
+        border-radius: 1.875rem;
+       
+    }
     > li img{
         width:1.375rem;
         @include breakpoint-down(small){

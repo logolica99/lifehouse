@@ -13,11 +13,10 @@ Two important folders in this directory is **api** and **frontend** folder
 
 
 ## How to run the application
-1.**To run the API**
+1. **To run the API**
     Navigate into the **api** folder with a terminal or cmd and type
     `pip install -r requirements.txt`
-    to install all the dependencies
-    now run the commands
+    to install all the dependencies. Now run the commands
     `python manage.py makemigrations`
     `python manage.py migrate`
     `python manage.py runserver`

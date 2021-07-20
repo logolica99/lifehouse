@@ -37,7 +37,7 @@ Two important folders in this directory is **api** and **frontend** folder
 ## Distinctiveness and Complexity
 
 This project is inspired from the social media project but with higher complexity and features.
-This project required Django REST framework to run as backend API and React as frontend.
+This project required Django REST framework to run as backend API and React as frontend. This project two different frameworks to work.
 The previous social media folder didn't have any form of styling (custom UI) in the frontend which this project provides.
 There was to no **Comments**,**Comment likes**, **Search**  or **Notifications** features in the previous project which also this project has. This project required **SASS** for styling.
 

@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     getIsLogged();
   }, []);
-  const [apiUrl,setAPIUrl] = useState("http://192.168.0.103:8000/api");
+  const [apiUrl,setAPIUrl] = useState("http://127.0.0.1:8000/api");
   const [posts, setPosts] = useState([]);
   const [notifications, setNotifications] = useState([]);
 

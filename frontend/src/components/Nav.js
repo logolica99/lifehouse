@@ -34,12 +34,12 @@ const Nav = (props) => {
             <img title="Notifications" src={notification_png} alt="" />
           </li>
         </Link>
-        <Link to="/messages" className="messages_logo ">
+        {/* <Link to="/messages" className="messages_logo ">
           <li>
             {" "}
             <img title="Messages" src={messages_png} alt="" />
           </li>
-        </Link>
+        </Link> */}
         <Link to={`/user/${props.username}`} className="user_logo ">
           <li>
             {" "}

@@ -29,7 +29,8 @@ Two important folders in this directory is **api** and **frontend** folder
     `npm install` 
     to install the dependencies and then run
     `npm start`
-    to start the server
+    to start the server. After running the server you have to go to the **/src/App.js** file and change the api url (the url in which django server is running).
+
 
 
 

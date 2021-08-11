@@ -1,4 +1,4 @@
-# Project: Lifehouse ![logo](https://raw.githubusercontent.com/logolica99/lifehouse/master/frontend/src/components/img/icons/around-the-world.png)
+# Project: Lifehouse <img src="https://raw.githubusercontent.com/logolica99/lifehouse/master/frontend/src/components/img/icons/around-the-world.png" alt="logo">
 **Lifehouse** is a **social media**  platform created using django as backend API and React as front-end.
 
 

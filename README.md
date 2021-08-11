@@ -1,6 +1,8 @@
-# Project: Lifehouse
+# Project: Lifehouse ![logo](https://raw.githubusercontent.com/logolica99/lifehouse/master/frontend/src/components/img/icons/around-the-world.png)
 **Lifehouse** is a **social media**  platform created using django as backend API and React as front-end.
 
+
+## [Link to the project](https://lifehousegg.netlify.com)
 ## File description
 Two important folders in this directory is **api** and **frontend** folder
 
